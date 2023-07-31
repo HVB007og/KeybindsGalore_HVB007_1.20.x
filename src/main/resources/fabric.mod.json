@@ -1,40 +1,22 @@
 {
 	"schemaVersion": 1,
-	"id": "tutorialmod",
+	"id": "keybindsgalore",
 	"version": "${version}",
-	"name": "Tutorial Mod",
-	"description": "This is an tutorial mod made by harsh!",
+
+	"name": "Keybinds Galore",
+	"description": "Adds a popup menu when a conflicting keybind is pressed. Updated to 1.20 by HVB007, Originally by Cael",
 	"authors": [
 		"HVB007"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "MIT",
-	"icon": "assets/tutorialmod/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"net.harsh.tutorialmod.TutorialMod"
-		],
-		"client": [
-			"net.harsh.tutorialmod.TutorialModClient"
-		],
-		"fabric-datagen": [
-			"net.harsh.tutorialmod.TutorialModDataGenerator"
-		]
-	},
+	"license": "GNU Lesser General Public License v3.0",
+	"icon": "assets/keybindsgalore/icon.png",
+
+	"environment": "client",
 	"mixins": [
-		"tutorialmod.mixins.json"
+		"keybindsgalore.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.14.21",
-		"minecraft": "~1.20.1",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
+		"fabricloader": ">=0.14.8",
+		"minecraft": "1.20.x"
 	}
 }
