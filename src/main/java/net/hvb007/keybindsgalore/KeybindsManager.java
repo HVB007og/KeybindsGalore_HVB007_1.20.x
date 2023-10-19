@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 //logger
-import net.minecraft.client.MinecraftClient;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import net.minecraft.client.MinecraftClient;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 
 public class KeybindsManager {
-    private static final Logger LOGGER = LogManager.getLogger();
+//    private static final Logger LOGGER = LogManager.getLogger();
+
+
     // Creates an Hashmap? IDK what a hashmap is.
     private static final Map<InputUtil.Key, List<KeyBinding>> conflictingKeys = Maps.newHashMap();
 
@@ -29,9 +31,11 @@ public class KeybindsManager {
                 matches.add(bind);
             }
         }
+
         if (matches.size() > 1) {
             KeybindsManager.conflictingKeys.put(key, matches);
-            LOGGER.info("Conflicting key: " + key);
+//            LOGGER.info("Conflicting key: " + key);
+
             // Define the array of keys to check against
             InputUtil.Key[] keysToCheck = {
                     InputUtil.fromTranslationKey("key.keyboard.tab"),
@@ -45,10 +49,6 @@ public class KeybindsManager {
                     InputUtil.fromTranslationKey("key.keyboard.s"),
                     InputUtil.fromTranslationKey("key.keyboard.d")
             };
-//            InputUtil.Key[] keysToCheck = {
-//                    InputUtil.Key.KEY_TAB, InputUtil.Key.KEY_CAPS_LOCK, InputUtil.Key.KEY_LEFT_SHIFT,
-//                    InputUtil.Key.KEY_LEFT_CONTROL, InputUtil.Key.KEY_SPACE, InputUtil.Key.KEY_LEFT_ALT,
-//                    InputUtil.Key.KEY_W, InputUtil.Key.KEY_A, InputUtil.Key.KEY_S, InputUtil.Key.KEY_D};
 
             // Check if the key is in the array
             boolean keyInArray = false;
@@ -62,13 +62,6 @@ public class KeybindsManager {
 
             return !keyInArray;
 
-
-//            if key in array [key.keyboard.tab,key.keyboard.caps.lock,key.keyboard.left.shift,key.keyboard.left.control,
-//                    key.keyboard.space,key.keyboard.left.alt,key.keyboard.w,key.keyboard.a,key.keyboard.s,
-//                    key.keyboard.d]{
-//                            return false;
-//            } else{
-//            return true;}
         } else {
             KeybindsManager.conflictingKeys.remove(key);
             return false;
@@ -89,14 +82,11 @@ public class KeybindsManager {
         screen.setConflictedKey(key);
         MinecraftClient.getInstance().setScreen(screen);
     }
-//}
+
 
     // IDK, maby a shortcut method
     public static List<KeyBinding> getConflicting(InputUtil.Key key) {
         return conflictingKeys.get(key);
     }
 
-//    private static stopp(InputUtil.Key key){
-//        if
-//    }
 }
