@@ -42,7 +42,6 @@ public class KeybindsScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context,mouseX,mouseY,delta);
 
-
         int x = width / 2;
         int y = height / 2;
         int maxRadius = 80;
