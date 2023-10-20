@@ -9,7 +9,7 @@
 		"HVB007"
 	],
 	"license": "GNU Lesser General Public License v3.0",
-	"icon": "assets/keybindsgalore/icon.png",
+	"icon": "assets/keybindsgalore/keybindsgalore_icon.png",
 
 	"environment": "client",
 	"mixins": [
