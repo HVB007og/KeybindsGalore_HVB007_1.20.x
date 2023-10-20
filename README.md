@@ -1,10 +1,10 @@
 # KeybindsGalore_HVB007_1.20.x
 Updated to 1.20 by HVB007.
 
+>Github : https://github.com/HVB007og/KeybindsGalore_HVB007_1.20.x 
+>Fabric mod Which opens an popup when there are multiple actions bound to the same key in the Minecraft>controls>Keybinds settings. then choose one of the options to use.
 
-Github : https://github.com/HVB007og/KeybindsGalore_HVB007_1.20.x Fabric mod Which opens an popup when there are multiple actions bound to the same key in the Minecraft>controls>Keybinds settings. then choose one of the options to use.
-
-Changelog keybindsgalore-0.2-1.20:
+>Changelog keybindsgalore-0.2-1.20:
 
 Works with 1.20.2
 
@@ -22,7 +22,7 @@ Added Feature: Will not open the menu when pressing certain keys (Due to keys co
 
 Future Feature: Add mod setting to configure the keys to disable.
 
-Does not support conflicting Keybinds not using the Minecraft Keybinds settings.
+>Does not support conflicting Keybinds not using the Minecraft Keybinds settings.
 
 Updated to 1.20.x by HVB007
 
