@@ -67,6 +67,24 @@ public class KeybindsScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionColorProgram); //Updated to 1.20
         buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
 
+
+        // Add vertices for the circle
+//        int numCircleSegments = segments; // Adjust the number of segments for smoother circle
+//        float circleStep = (float) (2 * Math.PI / numCircleSegments);
+//        int circleColor = 0x66333333; // Adjust the color of the circle
+//        for (float i = 0; i < degPer + step / 2; i += step) {
+//            float xp = x + MathHelper.cos(thresholdDistance) * thresholdDistance;
+//            float yp = y + MathHelper.sin(thresholdDistance) * thresholdDistance;
+//
+//            if (i == 0) {
+//                buf.vertex(xp, yp, 0).color(255, 255, 255, 255).next();
+//            }
+//            buf.vertex(xp, yp, 0).color(255, 255, 255, 255).next();
+////            buf.vertex(xp, yp, 0).color(r, g, b, a).next();
+//        }
+//        // Draw the circle
+//        tess.draw();
+//
         //if cursor is in sector then it Highlights
         for (int seg = 0; seg < segments; seg++) {// Calculate mouse position relative to the center
             float dx = mouseX - x;
@@ -91,6 +109,7 @@ public class KeybindsScreen extends Screen {
             if (seg % 2 == 0) {
                 gs += 0x19;
             }
+            // colour
             int r = gs;
             int g = gs;
             int b = gs;
@@ -117,9 +136,73 @@ public class KeybindsScreen extends Screen {
             }
         }
         tess.draw();
-        // IDK, This does something but im not sure
+
+
+        Tessellator tess2 = Tessellator.getInstance();// IDK
+        BufferBuilder buf2 = tess2.getBuffer();
+        buf2.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        float dx = mouseX - x;
+        float dy = mouseY - y;
+
+        // Calculate distance from the center
+        float distance = (float) Math.sqrt(dx * dx + dy * dy);
+        // Check if the cursor is within the threshold distance from the center
+        boolean withinThreshold = distance < thresholdDistance;
+        // Check if the cursor is within the center circle
+        boolean mouseInCancelSector =(!withinThreshold);
+
+        // Draw a small circle at the center
         for (int seg = 0; seg < segments; seg++) {
-            boolean mouseInSector = degPer * seg < angle && angle < degPer * (seg + 1);
+            float radius = Math.max(0F, Math.min((timeIn + delta - seg * 6F / segments) * 40F, maxRadius) * 0.2F);
+
+            int gs = 0x35;
+            // colour
+            int r = gs;
+            int g = gs;
+            int b = gs;
+            int a = 0xFF;
+
+            if (!mouseInCancelSector) {
+                r = 0xCC;
+                g = 0x00;
+                b = 0x00;
+            }
+
+            if (seg == 0) {
+                buf2.vertex(x, y, 0).color(r, g, b, a).next();
+            }
+
+            for (float i = 0; i < degPer + step / 2; i += step) {
+                float rad = i + seg * degPer;
+                float xp = x + MathHelper.cos(rad) * radius;
+                float yp = y + MathHelper.sin(rad) * radius;
+
+                if (i == 0) {
+                    buf2.vertex(xp, yp, 0).color(r, g, b, a).next();
+                }
+                buf2.vertex(xp, yp, 0).color(r, g, b, a).next();
+            }
+        }
+        tess.draw();
+
+
+
+        // IDK, This does something but im not sure
+        // update: this loop is used to underline the command of selected text
+        for (int seg = 0; seg < segments; seg++) {
+             dx = mouseX - x;
+             dy = mouseY - y;
+
+            // Calculate distance from the center
+            distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+            // Check if the cursor is within the threshold distance from the center
+            withinThreshold = distance < thresholdDistance;
+
+            // Check if the cursor is within the segment
+            boolean mouseInSector = (degPer * seg < angle) && (angle < degPer * (seg + 1)) && (!withinThreshold);
+
+//            boolean mouseInSector = degPer * seg < angle && angle < degPer * (seg + 1);
             float radius = Math.max(0F, Math.min((timeIn + delta - seg * 6F / segments) * 40F, maxRadius));
             if (mouseInSector) {
                 radius *= 1.025f;
@@ -142,7 +225,6 @@ public class KeybindsScreen extends Screen {
 
             // Updated To 1.20, uses DrawContext instead of textRenderer
             context.drawTextWithShadow(textRenderer,name, (int) xsp, (int) ysp, 0xFFFFFF);
-
         }
     }
 
