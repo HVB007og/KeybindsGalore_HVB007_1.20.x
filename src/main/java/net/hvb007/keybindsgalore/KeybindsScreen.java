@@ -23,14 +23,18 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
 
-public class KeybindsScreen extends Screen {
+//logger
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class KeybindsScreen extends Screen {
+    private static final Logger LOGGER = LogManager.getLogger();
     int timeIn = 0;
     int slotSelected = -1;
-
+    float thresholdDistance = 17.0f; // Adjust this value as needed for the dead area at the center of the circle selector
     private InputUtil.Key conflictedKey = InputUtil.UNKNOWN_KEY;
-
     final MinecraftClient mc;
+
 
     public KeybindsScreen() {
         super(NarratorManager.EMPTY);
@@ -49,7 +53,7 @@ public class KeybindsScreen extends Screen {
         double angle = mouseAngle(x, y, mouseX, mouseY);
 
         //Determines how many segments to make for the circle selector thingy
-        int segments = KeybindsManager.getConflicting(conflictedKey).size();
+        int segments = KeybindsManager.getConflicting(conflictedKey).size(); // number of segments
         float step = (float) Math.PI / 180;
         float degPer = (float) Math.PI * 2 / segments;
 
@@ -64,8 +68,20 @@ public class KeybindsScreen extends Screen {
         buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
 
         //if cursor is in sector then it Highlights
-        for (int seg = 0; seg < segments; seg++) {
-            boolean mouseInSector = degPer * seg < angle && angle < degPer * (seg + 1);
+        for (int seg = 0; seg < segments; seg++) {// Calculate mouse position relative to the center
+            float dx = mouseX - x;
+            float dy = mouseY - y;
+
+            // Calculate distance from the center
+            float distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+            // Check if the cursor is within the threshold distance from the center
+            boolean withinThreshold = distance < thresholdDistance;
+
+            // Check if the cursor is within the segment
+            boolean mouseInSector = (degPer * seg < angle) && (angle < degPer * (seg + 1)) && (!withinThreshold);
+
+//            LOGGER.info("insector: " + mouseInSector + ", dist:" + distance);
             float radius = Math.max(0F, Math.min((timeIn + delta - seg * 6F / segments) * 40F, maxRadius));
             if (mouseInSector) {
                 radius *= 1.025f;
