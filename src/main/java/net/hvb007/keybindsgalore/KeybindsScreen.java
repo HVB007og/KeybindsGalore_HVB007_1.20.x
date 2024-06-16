@@ -24,11 +24,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
 
 //logger
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 public class KeybindsScreen extends Screen {
-    private static final Logger LOGGER = LogManager.getLogger();
+//    private static final Logger LOGGER = LogManager.getLogger();
     int timeIn = 0;
     int slotSelected = -1;
     float thresholdDistance = 17.0f; // Adjust this value as needed for the dead area at the center of the circle selector
@@ -166,6 +166,7 @@ public class KeybindsScreen extends Screen {
                 r = 0xCC;
                 g = 0x00;
                 b = 0x00;
+//                context.drawCenteredTextWithShadow(textRenderer,"X", (int) x, (int) y, 0xFFFFFF);
             }
 
             if (seg == 0) {
@@ -225,6 +226,10 @@ public class KeybindsScreen extends Screen {
 
             // Updated To 1.20, uses DrawContext instead of textRenderer
             context.drawTextWithShadow(textRenderer,name, (int) xsp, (int) ysp, 0xFFFFFF);
+
+            if (!mouseInCancelSector){
+                context.drawCenteredTextWithShadow(textRenderer,"X", (int) x, y - (textRenderer.fontHeight / 2), 0xFFFFFF);
+            }
         }
     }
 

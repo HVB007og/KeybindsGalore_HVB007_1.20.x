@@ -17,9 +17,21 @@ import java.util.Map;
 
 public class KeybindsManager {
 //    private static final Logger LOGGER = LogManager.getLogger();
+    // Define the array of keys to check against
+    private static final InputUtil.Key[] keysToCheck = {
+        InputUtil.fromTranslationKey("key.keyboard.tab"),
+        InputUtil.fromTranslationKey("key.keyboard.caps.lock"),
+        InputUtil.fromTranslationKey("key.keyboard.left.shift"),
+        InputUtil.fromTranslationKey("key.keyboard.left.control"),
+        InputUtil.fromTranslationKey("key.keyboard.space"),
+        InputUtil.fromTranslationKey("key.keyboard.left.alt"),
+        InputUtil.fromTranslationKey("key.keyboard.w"),
+        InputUtil.fromTranslationKey("key.keyboard.a"),
+        InputUtil.fromTranslationKey("key.keyboard.s"),
+        InputUtil.fromTranslationKey("key.keyboard.d")
+    };
 
-
-    // Creates an Hashmap? IDK what a hashmap is.
+    // Creates an Hashmap? IDK what a hashmap is., I now understand that a hashmap is like a dictionary in python.
     private static final Map<InputUtil.Key, List<KeyBinding>> conflictingKeys = Maps.newHashMap();
 
     //When conflicting keys are pressed this creates a Array List of all the bindings bound to same key
@@ -35,20 +47,6 @@ public class KeybindsManager {
         if (matches.size() > 1) {
             KeybindsManager.conflictingKeys.put(key, matches);
 //            LOGGER.info("Conflicting key: " + key);
-
-            // Define the array of keys to check against
-            InputUtil.Key[] keysToCheck = {
-                    InputUtil.fromTranslationKey("key.keyboard.tab"),
-                    InputUtil.fromTranslationKey("key.keyboard.caps.lock"),
-                    InputUtil.fromTranslationKey("key.keyboard.left.shift"),
-                    InputUtil.fromTranslationKey("key.keyboard.left.control"),
-                    InputUtil.fromTranslationKey("key.keyboard.space"),
-                    InputUtil.fromTranslationKey("key.keyboard.left.alt"),
-                    InputUtil.fromTranslationKey("key.keyboard.w"),
-                    InputUtil.fromTranslationKey("key.keyboard.a"),
-                    InputUtil.fromTranslationKey("key.keyboard.s"),
-                    InputUtil.fromTranslationKey("key.keyboard.d")
-            };
 
             // Check if the key is in the array
             boolean keyInArray = false;
